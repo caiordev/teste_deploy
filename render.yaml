@@ -7,3 +7,11 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.0
+      - key: PYTHONUNBUFFERED
+        value: "true"
+      - key: MALLOC_TRIM_THRESHOLD_
+        value: "65536"
+    disk:
+      name: tmp
+      mountPath: /tmp
+      sizeGB: 0.5

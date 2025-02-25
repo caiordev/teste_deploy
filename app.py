@@ -6,6 +6,7 @@ import cv2
 import numpy as np
 import pyrebase
 import torch
+import psutil
 
 app = Flask(__name__)
 CORS(app)
@@ -75,6 +76,35 @@ def show_plant_info(plant_name):
 
     except Exception as e:
         return f"Erro ao acessar o banco de dados: {e}", 500
+
+@app.route('/monitor')
+def monitor():
+    # Uso de CPU
+    cpu_percent = psutil.cpu_percent(interval=1)
+    
+    # Uso de memória
+    memory = psutil.virtual_memory()
+    ram_percent = memory.percent
+    ram_used = memory.used / (1024 * 1024 * 1024)  # Convertendo para GB
+    ram_total = memory.total / (1024 * 1024 * 1024)  # Convertendo para GB
+    
+    # Uso específico do processo Python
+    process = psutil.Process()
+    python_cpu = process.cpu_percent(interval=1)
+    python_memory = process.memory_info().rss / (1024 * 1024)  # MB
+    
+    return jsonify({
+        'sistema': {
+            'cpu_total': f"{cpu_percent}%",
+            'ram_total': f"{ram_percent}%",
+            'ram_usado': f"{ram_used:.2f}GB",
+            'ram_total_gb': f"{ram_total:.2f}GB"
+        },
+        'processo_python': {
+            'cpu': f"{python_cpu}%",
+            'memoria': f"{python_memory:.2f}MB"
+        }
+    })
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem'))

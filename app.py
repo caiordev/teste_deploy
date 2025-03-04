@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_cors import CORS
 from ultralytics import YOLO
+import os
 import base64
 import cv2
 import numpy as np

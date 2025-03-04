@@ -4,60 +4,168 @@
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detecção de Plantas</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../static/style.css">
+    <link href="https://unpkg.com/aos@next/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='front.css') }}" rel="stylesheet">
+    <title>Detecção Inteligente de Plantas</title>
 </head>
 <body>
+    <div class="logo-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-8 col-md-6 col-lg-4">
+                    <img src="{{ url_for('static', filename='ecp-ufma-logo.png') }}" alt="ECP UFMA Logo" class="university-logo img-fluid" data-aos="fade-down">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h1 class="hero-title">Detecção Inteligente de Plantas</h1>
-                    <p class="hero-subtitle">Identifique e aprenda sobre diferentes espécies de plantas usando inteligência artificial</p>
-                    <a href="/camera" class="btn btn-primary btn-lg">Começar Agora</a>
+                <div class="col-lg-7" data-aos="fade-right" data-aos-delay="100">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Detecção Inteligente de Plantas</h1>
+                        <p class="hero-subtitle">Utilize nossa tecnologia de ponta para identificar e aprender sobre diferentes espécies de plantas através da inteligência artificial</p>
+                        <div class="btn-group">
+                            <a href="/camera" class="btn btn-primary btn-lg">
+                                <i class="fas fa-camera me-2"></i>
+                                Começar Agora
+                            </a>
+                            <a href="/search" class="btn btn-outline-light btn-lg">
+                                <i class="fas fa-search me-2"></i>
+                                Buscar por Características
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="hero-image">
+                <div class="col-lg-5" data-aos="fade-left" data-aos-delay="200">
+                    <div class="hero-image-container">
+                        <div class="hero-image-overlay"></div>
                         <i class="fas fa-leaf hero-icon"></i>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- <div class="hero-wave">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div> -->
     </section>
 
     <!-- Features Section -->
     <section class="features">
         <div class="container">
-            <h2 class="text-center mb-5">Como Funciona</h2>
-            <div class="row">
-                <div class="col-md-4">
+            <h2 class="section-title text-center" data-aos="fade-up">Como Funciona</h2>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="feature-card">
-                        <i class="fas fa-camera feature-icon"></i>
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-camera feature-icon"></i>
+                        </div>
                         <h3>Capture a Imagem</h3>
-                        <p>Use sua câmera para fotografar a planta que deseja identificar</p>
+                        <p>Utilize sua câmera para fotografar a planta que deseja identificar com precisão e facilidade</p>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                     <div class="feature-card">
-                        <i class="fas fa-magic feature-icon"></i>
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-brain feature-icon"></i>
+                        </div>
                         <h3>Processamento IA</h3>
-                        <p>Nossa inteligência artificial analisa a imagem e identifica a espécie</p>
+                        <p>Nossa avançada inteligência artificial analisa a imagem e identifica a espécie com alta precisão</p>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
                     <div class="feature-card">
-                        <i class="fas fa-info-circle feature-icon"></i>
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-info-circle feature-icon"></i>
+                        </div>
                         <h3>Obtenha Informações</h3>
-                        <p>Receba detalhes sobre a planta identificada e dicas de cultivo</p>
+                        <p>Receba detalhes completos sobre a planta identificada e dicas especializadas de cultivo</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Team Section -->
+    <section class="informacoes">
+        <div class="container">
+            <div class="team-section">
+                <h2 class="section-title text-center" data-aos="fade-up">Desenvolvedores do Projeto</h2>
+                
+                <div class="member-card" data-aos="fade-up" data-aos-delay="100">
+                    <img src="{{ url_for('static', filename='haroldo.jpeg') }}" alt="Haroldo Gomes" class="member-photo">
+                    <div class="member-info">
+                        <h3>Haroldo Gomes</h3>
+                        <p><i class="fas fa-envelope me-2"></i>haroldo.gbf@ufma.br</p>
+                    </div>
+                    <div class="member-role">
+                        <span>Orientador</span>
+                    </div>
+                </div>
+
+                <div class="member-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="{{ url_for('static', filename='caio.jpg') }}" alt="Caio Reis" class="member-photo">
+                    <div class="member-info">
+                        <h3>Caio Reis Batista</h3>
+                        <p><i class="fas fa-envelope me-2"></i>caio.reis@discente.ufma.br</p>
+                    </div>
+                    <div class="member-role">
+                        <span>Aluno de Graduação</span>
+                    </div>
+                </div>
+
+                <div class="member-card" data-aos="fade-up" data-aos-delay="300">
+                    <img src="{{ url_for('static', filename='jefferson.jpg') }}" alt="jeffersson de Carvalho" class="member-photo">
+                    <div class="member-info">
+                        <h3>Jeffersson de Carvalho</h3>
+                        <p><i class="fas fa-envelope me-2"></i>jeffersson.c@discente.ufma.br</p>
+                    </div>
+                    <div class="member-role">
+                        <span>Aluno de Graduação</span>
+                    </div>
+                </div>
+
+                <div class="member-card" data-aos="fade-up" data-aos-delay="400">
+                    <img src="{{ url_for('static', filename='thales.jpg') }}" alt="Thales" class="member-photo">
+                    <div class="member-info">
+                        <h3>Thales Gustavo Mendes</h3>
+                        <p><i class="fas fa-envelope me-2"></i>gustavo@discente.ufma.br</p>
+                    </div>
+                    <div class="member-role">
+                        <span>Aluno de Graduação</span>
+                    </div>
+                </div>
+                
+                <div class="logo-container" data-aos="fade-up" data-aos-delay="500">
+                    <img src="{{ url_for('static', filename='ufma-logo.png') }}" alt="UFMA Logo" class="ufma-logo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="text-center">
+                <p class="mb-0"> 2025 Sistema de Detecção de Plantas. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+    </script>
 </body>
 </html>

@@ -107,6 +107,104 @@ def monitor():
         }
     })
 
+@app.route("/search")
+def search_plants():
+    return render_template("search.html")
+
+@app.route("/api/search", methods=["POST"])
+def api_search_plants():
+    try:
+        data = request.json
+        characteristics = data.get("characteristics", {})
+        print("Características de busca:", characteristics)
+        
+        # Buscar no Firebase
+        try:
+            # Primeiro, vamos verificar se conseguimos acessar o banco
+            all_plants = []
+            plants = db.get()  # Buscar todos os dados para debug
+            print("Estrutura do banco:", plants.val())
+            
+            # Agora buscar as plantas
+            plants_ref = db.child("plantas")  # Mudando de "plants" para "plantas"
+            plants_data = plants_ref.get()
+            print("Dados das plantas:", plants_data)
+            
+            if plants_data:
+                # Converter os dados para uma lista
+                for plant in plants_data.each():
+                    plant_data = plant.val()
+                    if isinstance(plant_data, dict):  # Verificar se é um dicionário válido
+                        all_plants.append(plant_data)
+            
+            print(f"Total de plantas carregadas: {len(all_plants)}")
+            
+            if not all_plants:
+                print("Nenhuma planta encontrada no Firebase")
+                return jsonify({"plants": [], "message": "Nenhuma planta encontrada no banco de dados"})
+            
+            matched_plants = []
+            for plant_data in all_plants:
+                print("Verificando planta:", plant_data.get('name', ''), "Família:", plant_data.get('familia', ''))
+                matches_all = True
+                
+                # Verificar cada característica
+                for key, value in characteristics.items():
+                    if not value:  # Pular campos vazios
+                        continue
+                        
+                    # Garantir que o campo existe e não é None
+                    plant_value = plant_data.get(key)
+                    if plant_value is None:
+                        print(f"Campo {key} não encontrado na planta")
+                        matches_all = False
+                        break
+                        
+                    # Converter para minúsculas para comparação case-insensitive
+                    plant_value = str(plant_value).lower().strip()
+                    search_value = str(value).lower().strip()
+                    
+                    print(f"Comparando {key}: '{search_value}' com '{plant_value}'")
+                    
+                    # Para descrição, verificar se contém as palavras-chave
+                    if key == 'descricao':
+                        keywords = search_value.split()
+                        if not any(keyword in plant_value for keyword in keywords):
+                            print("Palavras-chave não encontradas na descrição")
+                            matches_all = False
+                            break
+                    # Para outros campos, verificar se contém o valor (busca parcial)
+                    elif search_value not in plant_value and plant_value not in search_value:
+                        print(f"Valor não encontrado em {key}")
+                        matches_all = False
+                        break
+                
+                if matches_all:
+                    print("Planta corresponde aos critérios!")
+                    matched_plants.append(plant_data)
+            
+            print(f"Total de plantas encontradas: {len(matched_plants)}")
+            return jsonify({
+                "plants": matched_plants,
+                "message": f"Encontradas {len(matched_plants)} plantas"
+            })
+            
+        except Exception as e:
+            print("Erro ao buscar plantas no Firebase:", str(e))
+            return jsonify({
+                "plants": [],
+                "message": "Erro ao buscar plantas no banco de dados",
+                "error": str(e)
+            }), 500
+            
+    except Exception as e:
+        print("Erro na rota de busca:", str(e))
+        return jsonify({
+            "plants": [],
+            "message": "Erro ao processar a busca",
+            "error": str(e)
+        }), 500
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
